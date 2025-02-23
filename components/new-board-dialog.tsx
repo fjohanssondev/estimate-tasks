@@ -14,6 +14,8 @@ import { Button } from "./ui/button"
 import { useState } from "react"
 import { Label } from "./ui/label"
 import { Input } from "./ui/input"
+import { createNewBoard } from "@/actions/board"
+import { redirect } from "next/navigation"
 
 export function CreateNewBoard(){
   const [boardName, setBoardName] = useState("")
@@ -21,6 +23,8 @@ export function CreateNewBoard(){
   const handleCreateNewBoard = async () => {
     // Create new board
     console.log(boardName)
+    const board = await createNewBoard(boardName)
+    redirect(`/app/board/${board?.[0].id}`)
   }
 
   return (
@@ -34,8 +38,9 @@ export function CreateNewBoard(){
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
+          <div className="flex flex-col space-y-4 w-full">
           <div className="grid flex-1 gap-2">
-          <Label htmlFor="name" className="sr-only">
+          <Label htmlFor="name">
               Board name
           </Label>
           <Input
@@ -46,7 +51,19 @@ export function CreateNewBoard(){
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBoardName(e.target.value)}
           />
           </div>
+          <div className="grid flex-1 gap-2">
+          <Label htmlFor="slug">
+            Slug
+          </Label>
+          <Input
+            id="slug"
+            type="text"
+            readOnly
+            value={boardName.toLowerCase().replace(/ /g, "-")}
+          />
           </div>
+          </div>
+        </div>
       <DialogFooter className="sm:justify-start">
           <Button onClick={handleCreateNewBoard} type="submit" variant="default">
             Create
