@@ -29,16 +29,3 @@ export async function createNewBoard(name: string){
 
   return board
 }
-
-export async function updateCursor(x: number, y: number){
-  const supabase = await createClient()
-  const { data } = await supabase.auth.getUser()
-  
-  const { error } = await supabase.from('cursors').upsert({
-    user_id: data.user?.id,
-    board_id: "df51413f-bf01-49fc-9b3d-eeb933bae390",
-    offset_x: x,
-    offset_y: y,
-    color: "purple"
-  })
-}
