@@ -1,24 +1,16 @@
-'use client'
-
-import Canvas from "@/components/canvas";
-import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/server";
 import { createAnonymousUserIfNoSession } from "./action";
+import { Board } from "./board";
 
-export default function Board() {
-  const [cursor, setCursor] = useState({ x: 0, y: 0 })
+export default async function BoardPage() {
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getUser()
   
-  useEffect(() => {
-    const checkIfUserExists = async () => {
-      await createAnonymousUserIfNoSession()
-    }
-
-    checkIfUserExists()
-  }, [])
+  const { data: profile } = await supabase.from('profiles').select("id, username").eq('id', data?.user?.id!).single()
 
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <Canvas />
-
+      <Board username={profile?.username!} id={data?.user?.id!} />
     </div>
   );
 }
