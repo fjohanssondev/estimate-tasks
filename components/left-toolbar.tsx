@@ -1,7 +1,8 @@
 import { MousePointer, Square, StickyNote, Timer, Type } from "lucide-react";
 import { ToolbarItem } from "./toolbar-item";
+import { addRectangle } from "@/lib/shapes";
 
-export function LeftToolbar({ action }: Readonly<{ action: () => void }>) {
+export function LeftToolbar() {
   return (
     <div className="absolute z-50 w-12 h-auto py-1 left-4 top-1/2 transform -translate-y-1/2 bg-white shadow border flex flex-col items-center justify-center">
       <div className="flex flex-col space-y-1">
@@ -26,7 +27,7 @@ export function LeftToolbar({ action }: Readonly<{ action: () => void }>) {
         <ToolbarItem
           icon={<Square strokeWidth={1.5} stroke="#000" />}
           tooltip="Rectangle"
-          onClick={action}
+          onClick={() => { console.log("") }}
         />
         <ToolbarItem
           icon={<StickyNote strokeWidth={1.5} stroke="#000" />}

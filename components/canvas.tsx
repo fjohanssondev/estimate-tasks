@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef } from 'react';
-import { Canvas as FabricCanvas, Rect, Shadow } from 'fabric';
+import { Canvas as FabricCanvas } from 'fabric';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from './ui/context-menu';
 import { LeftToolbar } from './left-toolbar';
 
@@ -36,32 +36,9 @@ function Canvas() {
     };
   }, []);
 
-  const addRectangle = () => {
-    if (!canvasRef.current) return;
-
-    const rect = new Rect({
-      left: Math.random() * (window.innerWidth - 100),
-      top: Math.random() * (window.innerHeight - 100),
-      fill: '#ffffff',
-      width: 100,
-      height: 100,
-      stroke: '#000000',
-      strokeWidth: 1,
-      shadow: new Shadow({
-        color: 'rgba(0,0,0,0.2)',
-        blur: 10,
-        offsetX: 5,
-        offsetY: 5,
-      }),
-    });
-
-    canvasRef.current.add(rect);
-    canvasRef.current.setActiveObject(rect);
-  };
-
   return (
     <div ref={containerRef} className="w-screen h-screen overflow-hidden relative">
-      <LeftToolbar action={addRectangle} />
+      <LeftToolbar />
       <ContextMenu>
         <ContextMenuTrigger>
           <canvas id="canvas" />
